@@ -17,7 +17,7 @@ public class MainController {
     @Autowired
     private GreetingService greetingService;
 
-    @GetMapping("/greeting")
+    @GetMapping("/", "/greeting")
     @ResponseStatus(HttpStatus.OK)
     public String getGreeting(){
         return "HelloWorld";
