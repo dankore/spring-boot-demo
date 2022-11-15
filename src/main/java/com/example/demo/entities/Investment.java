@@ -12,15 +12,17 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Table(name = "investment")
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Investment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,6 +32,4 @@ public class Investment {
 
     @OneToMany(mappedBy = "investment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<InvestmentNote> notes;
-
-
 }

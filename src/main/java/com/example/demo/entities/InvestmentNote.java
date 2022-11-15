@@ -11,13 +11,17 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Table(name = "investment_note")
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class InvestmentNote {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

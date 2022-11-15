@@ -32,15 +32,15 @@ public class InvestmentController {
     @PostMapping("/investments")
     @ResponseStatus(HttpStatus.CREATED)
     public void createInvestment(@RequestBody CreateInvestment createInvestment){
-        var newInvestment = new Investment();
-        newInvestment.setAmount(createInvestment.getAmount());
-        repo.save(newInvestment);
+        repo.save(Investment.builder()
+            .amount(createInvestment.getAmount())
+            .build());
     }
 
     @GetMapping("/investments/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Investment getInvestments(@PathVariable String id){
-        return repo.findById(Long.parseLong(id)).get();
+    public Investment getInvestment(@PathVariable Long id){
+        return repo.findById(id).get();
     }
 
     @GetMapping("/investments/byAmount/{amount}")
@@ -51,19 +51,19 @@ public class InvestmentController {
 
     @GetMapping("/investments/{id}/note")
     @ResponseStatus(HttpStatus.CREATED)
-    public List<InvestmentNote> getInvestmentNotes(@PathVariable String id){
-        return repo.findById(Long.parseLong(id)).get().getNotes();
+    public List<InvestmentNote> getInvestmentNotes(@PathVariable Long id){
+        return getInvestment(id).getNotes();
     }
 
     @PostMapping("/investments/{id}/note")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createNote(@PathVariable String id, @RequestBody CreateNote createNote){
-        var investment = repo.findById(Long.parseLong(id)).get();
-        var newNote = new InvestmentNote();
-        newNote.setText(createNote.getText());
-        newNote.setInvestment(investment);
-
-        investment.getNotes().add(newNote);
+    public void createNote(@PathVariable Long id, @RequestBody CreateNote createNote){
+        var investment = getInvestment(id);
+        investment.getNotes().add(
+            InvestmentNote.builder()
+                .text(createNote.getText())
+                .investment(investment)
+                .build());
         repo.save(investment);
     }
 

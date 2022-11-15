@@ -17,21 +17,21 @@ public class MainController {
     @Autowired
     private GreetingService greetingService;
 
-    @GetMapping("/", "/greeting")
+    @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
     public String getGreeting(){
         return "HelloWorld";
     }
 
     // Exact same thing as above
-    @GetMapping("/greeting2")
+    @GetMapping("/greeting")
     public ResponseEntity<String> getGreeting2() {
         return ResponseEntity.ok("HelloWorld");
     }
 
     @GetMapping("/greetingService")
     @ResponseStatus(HttpStatus.OK)
-    public String geServicetGreeting(){
+    public String getServicetGreeting(){
         return greetingService.generateGreeting();
     }
 }
