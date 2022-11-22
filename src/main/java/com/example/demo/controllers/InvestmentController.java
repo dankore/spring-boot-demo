@@ -25,47 +25,47 @@ public class InvestmentController {
 
     @GetMapping("/investments")
     @ResponseStatus(HttpStatus.OK)
-    public List<Investment> getInvestments(){
+    public List<Investment> getInvestments() {
         return repo.findAll();
     }
 
     @PostMapping("/investments")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createInvestment(@RequestBody CreateInvestment createInvestment){
+    public void createInvestment(@RequestBody CreateInvestment createInvestment) {
         repo.save(Investment.builder()
-            .amount(createInvestment.getAmount())
-            .build());
+                .amount(createInvestment.getAmount())
+                .build());
     }
 
     @GetMapping("/investments/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Investment getInvestment(@PathVariable Long id){
+    public Investment getInvestment(@PathVariable Long id) {
         return repo.findById(id).get();
     }
 
     @GetMapping("/investments/byAmount/{amount}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Investment> getInvestmentsByAmount(@PathVariable int amount){
+    public List<Investment> getInvestmentsByAmount(@PathVariable int amount) {
         return repo.findAllByAmount(amount);
     }
 
     @GetMapping("/investments/{id}/note")
     @ResponseStatus(HttpStatus.CREATED)
-    public List<InvestmentNote> getInvestmentNotes(@PathVariable Long id){
+    public List<InvestmentNote> getInvestmentNotes(@PathVariable Long id) {
         return getInvestment(id).getNotes();
     }
 
     @PostMapping("/investments/{id}/note")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createNote(@PathVariable Long id, @RequestBody CreateNote createNote){
+    public void createNote(@PathVariable Long id, @RequestBody CreateNote createNote) {
         var investment = getInvestment(id);
         investment.getNotes().add(
-            InvestmentNote.builder()
-                .text(createNote.getText())
-                .investment(investment)
-                .build());
+                InvestmentNote.builder()
+                        .text(createNote.getText())
+                        .investment(investment)
+                        .build());
+        System.out.println(investment.toString());
         repo.save(investment);
     }
 
 }
- 
